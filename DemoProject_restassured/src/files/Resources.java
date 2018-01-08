@@ -7,6 +7,11 @@ public class Resources {
 		String res = "/maps/api/place/add/json";
 		return res;
 	}
+	
+	public static String placePostDataXml() {
+		String res = "/maps/api/place/add/xml";
+		return res;
+	}
 
 	public static String deletePostData() {
 		String res = "/maps/api/place/delete/json";

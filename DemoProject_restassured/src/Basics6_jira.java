@@ -17,7 +17,7 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.util.Properties;
 
-public class Basics3 {
+public class Basics6_jira {
 	Properties prop = new Properties();
 	
 	@BeforeTest
