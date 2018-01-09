@@ -51,10 +51,15 @@ public class Payload {
 	}
 	
 	public static String addCommentJiraPostData() {
-		String bodyStr = 	"";
+		String bodyStr = 	"    {\n" + 
+				"      \"body\": \"A coment dolor sit amet, consectetur adipiscing elit. Pellentesque eget venenatis elit. Duis eu justo eget augue iaculis fermentum. Sed semper quam laoreet nisi egestas at posuere augue semper.\",\n" + 
+				"      \"visibility\": {\n" + 
+				"        \"type\": \"role\",\n" + 
+				"        \"value\": \"Administrators\"\n" + 
+				"      }\n" + 
+				"    }";
 		System.out.println(bodyStr);
 		return bodyStr;
 	}
 	
-
 }

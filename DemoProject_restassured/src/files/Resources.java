@@ -25,8 +25,17 @@ public class Resources {
 		String res = "/rest/auth/1/session";
 		return res;
 	}
-	public static String jiraCreatePostData() {
-		String res = "/rest/api/2/issue ";
+	public static String jiraCreateIssuePostData() {
+		String res = "/rest/api/2/issue";
+		return res;
+	}
+	public static String jiraAddCommentPostData(String issueIdOrKey) {
+		String res = "/rest/api/2/issue/" + issueIdOrKey + "/comment";
+		return res;
+	}
+
+	public static String jiraDeleteCommentDeleteData(String issueIdOrKey, String commentId) {
+		String res = "/rest/api/2/issue/" + issueIdOrKey + "/comment/"+commentId;
 		return res;
 	}
 }

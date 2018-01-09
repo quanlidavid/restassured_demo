@@ -54,15 +54,37 @@ public class Basics6_jira {
 						.header("Content-Type","application/json")
 						.body(Payload.createIssueJiraPostData()).log().all()
 						.when()
-						.post(Resources.jiraCreatePostData())
+						.post(Resources.jiraCreateIssuePostData())
 						.then().assertThat().statusCode(201).and()
 						.contentType(ContentType.JSON).log().all()
 						.extract().response();
 		js = ReusableMethods.rawToJson(response);
-		String issueID = js.get("id");
-		System.out.println(issueID);
+		String issueId = js.get("id");
+		System.out.println(issueId);
 		
-		//Task 4 create a comment of the
+		//Task 4 create a comment of the issue
+		response = given()
+				.header("cookie",session_name + "=" + session_value)
+				.header("Accept","application/json")
+				.header("Content-Type","application/json")
+				.body(Payload.addCommentJiraPostData()).log().all()
+				.when()
+				.post(Resources.jiraAddCommentPostData(issueId))
+				.then().assertThat().statusCode(201).and()
+				.contentType(ContentType.JSON).log().all()
+				.extract().response();
+		js = ReusableMethods.rawToJson(response);
+		String commentId = js.get("id");
+		System.out.println(commentId);
 		
+		//Task 5 delete a comment of the issue
+		response = given()
+				.header("cookie",session_name + "=" + session_value)
+				.header("Accept","application/json").log().all()
+				.when()
+				.delete(Resources.jiraDeleteCommentDeleteData(issueId,commentId))
+				.then().assertThat().statusCode(204).and()
+				.contentType(ContentType.JSON).log().all()
+				.extract().response();
 	}
 }
