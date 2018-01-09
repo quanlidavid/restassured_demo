@@ -19,7 +19,9 @@ public class Basics1 {
 	@BeforeTest
 	public void getData() throws IOException {
 		System.out.println(Class.class.getClass().getResource("/").getPath());
-		FileInputStream fis = new FileInputStream(Class.class.getClass().getResource("/").getPath()+"/files/env.properties");
+		System.out.println(Basics1.class.getClassLoader().getResource("").getPath());
+
+		FileInputStream fis = new FileInputStream(Class.class.getClass().getResource("/").getPath()+"files/env.properties");
 		prop.load(fis);
 	}
 	

@@ -21,5 +21,12 @@ public class Resources {
 		String res = "/maps/api/place/nearbysearch/json";
 		return res;
 	}
-	
+	public static String jiraLoginPostData() {
+		String res = "/rest/auth/1/session";
+		return res;
+	}
+	public static String jiraCreatePostData() {
+		String res = "/rest/api/2/issue ";
+		return res;
+	}
 }

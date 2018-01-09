@@ -18,8 +18,9 @@ public class Payload {
 	}
 
 	public static String getAddPlacePostDataXml() throws IOException {
+
 		String bodyStr = GenerateStringFromResource(
-				Class.class.getClass().getResource("/").getPath() + "/files/payloads/xml/ÏaddPlacePostData.xml");
+				Class.class.getClass().getResource("/").getPath().substring(1) + "files/payloads/xml/addPlacePostData.xml");
 		return bodyStr;
 	}
 
@@ -27,4 +28,33 @@ public class Payload {
 		String bodyStr = "{\"place_id\":\"" + place_id + "\"}";
 		return bodyStr;
 	}
+	
+	public static String loginJiraPostData() {
+		String bodyStr = "{ \"username\": \"quanlidavid\", \"password\": \"53930000\" }";
+		return bodyStr;
+	}
+	
+	public static String createIssueJiraPostData() {
+		String bodyStr = "	{\n" + 
+				"	      \"fields\": {\n" + 
+				"	        \"project\": {\n" + 
+				"	          \"key\": \"RES\"\n" + 
+				"	        },\n" + 
+				"	        \"summary\": \"something's wrong\",\n" + 
+				"	        \"issuetype\": {\n" + 
+				"	          \"name\": \"Bug\"\n" + 
+				"	        }\n" + 
+				"			}\n" +		
+				"	}";
+		System.out.println(bodyStr);
+		return bodyStr;
+	}
+	
+	public static String addCommentJiraPostData() {
+		String bodyStr = 	"";
+		System.out.println(bodyStr);
+		return bodyStr;
+	}
+	
+
 }

@@ -22,7 +22,7 @@ public class Basics6_jira {
 	
 	@BeforeTest
 	public void getData() throws IOException {	
-		FileInputStream fis = new FileInputStream(Class.class.getClass().getResource("/").getPath()+"/files/env.properties");
+		FileInputStream fis = new FileInputStream(Class.class.getClass().getResource("/").getPath()+"/files/jira.properties");
 		prop.load(fis);
 	}
 	
@@ -31,31 +31,38 @@ public class Basics6_jira {
 		// Create a place (place id in response)
 		// and delete that place (Request - place id)
 		
-		//Task 1- Grab the response
-		RestAssured.baseURI = prop.getProperty("HOST");
+		//Task 1- Login get response
+		RestAssured.baseURI = prop.getProperty("JIRAHOST");
 		Response response = given()
-							.queryParam("key", prop.getProperty("KEY"))
-							.body(Payload.getAddPlacePostData())
-							.when()
-							.post(Resources.placePostData())
-							.then().assertThat().statusCode(200).and()
-							.contentType(ContentType.JSON).and().body("status", equalTo("OK"))
-							.extract().response();
+								.header("Content-Type","application/json")
+								.body(Payload.loginJiraPostData())
+								.when()
+								.post(Resources.jiraLoginPostData())
+								.then()
+								.assertThat().statusCode(200).and()
+								.contentType(ContentType.JSON).and()
+								.extract().response();
 		
-		// Task 2- Grab the Place ID from response
+		// Task 2- Grab the session name and value from response
 		JsonPath js = ReusableMethods.rawToJson(response);
-		String place_id = js.get("place_id");
-		System.out.println(place_id);
+		String session_name = js.get("session.name");
+		String session_value = js.get("session.value");
 		
-		//Task 3 place this place id in the Delete request
-		String deleteBodyStr = Payload.getDeletePlacePostData(place_id);
-		given()
-			.queryParam("key", prop.getProperty("KEY"))
-			.body(deleteBodyStr)
-			.when()
-			.post(Resources.deletePostData())
-			.then().assertThat().statusCode(200).and()
-			.contentType(ContentType.JSON).and()
-			.body("status", equalTo("OK"));
+		//Task 3 create a issue and get the issue id
+		response = given()
+						.header("cookie",session_name + "=" + session_value)
+						.header("Content-Type","application/json")
+						.body(Payload.createIssueJiraPostData()).log().all()
+						.when()
+						.post(Resources.jiraCreatePostData())
+						.then().assertThat().statusCode(201).and()
+						.contentType(ContentType.JSON).log().all()
+						.extract().response();
+		js = ReusableMethods.rawToJson(response);
+		String issueID = js.get("id");
+		System.out.println(issueID);
+		
+		//Task 4 create a comment of the
+		
 	}
 }

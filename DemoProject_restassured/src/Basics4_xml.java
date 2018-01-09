@@ -23,7 +23,7 @@ public class Basics4_xml {
 	@BeforeTest
 	public void getData() throws IOException {
 		FileInputStream fis = new FileInputStream(
-				Class.class.getClass().getResource("/").getPath() + "/files/env.properties");
+				Class.class.getClass().getResource("/").getPath() + "files/env.properties");
 		prop.load(fis);
 	}
 

@@ -19,7 +19,7 @@ public class Basics2 {
 	
 	@BeforeTest
 	public void getData() throws IOException {
-		FileInputStream fis = new FileInputStream(Class.class.getClass().getResource("/").getPath()+"/files/env.properties");
+		FileInputStream fis = new FileInputStream(Class.class.getClass().getResource("/").getPath()+"files/env.properties");
 		prop.load(fis);
 	}
 	
