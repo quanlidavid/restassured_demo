@@ -1,3 +1,4 @@
+package tests;
 import org.testng.annotations.BeforeTest;
 import org.testng.annotations.Test;
 
@@ -24,13 +25,13 @@ public class Basics2 {
 	}
 	
 	@Test
-	public void postData() {
+	public void createPlaceAPI() {
 		RestAssured.baseURI = prop.getProperty("HOST");
 		
 		given()
 			.queryParam("key", prop.getProperty("KEY"))
 			.body(Payload.getAddPlacePostData())
-			.when().post(Resources.placePostData())
+			.when().post(Resources.placeAddJson())
 			.then().assertThat().statusCode(200).and()
 			.contentType(ContentType.JSON).and().body("status", equalTo("OK"));
 		

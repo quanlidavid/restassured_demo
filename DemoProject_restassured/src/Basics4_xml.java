@@ -1,3 +1,4 @@
+package tests;
 import org.testng.annotations.BeforeTest;
 import org.testng.annotations.Test;
 
@@ -28,11 +29,11 @@ public class Basics4_xml {
 	}
 
 	@Test
-	public void postData() throws IOException {
+	public void postDataXML() throws IOException {
 		RestAssured.baseURI = prop.getProperty("HOST");
 
 		Response response = given().queryParam("key", prop.getProperty("KEY")).body(Payload.getAddPlacePostDataXml()).when()
-								.post(Resources.placePostDataXml()).then().assertThat().statusCode(200).and()
+								.post(Resources.placeAddXml()).then().assertThat().statusCode(200).and()
 								.contentType(ContentType.XML)
 								.extract().response();
 		

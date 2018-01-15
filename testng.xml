@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
+<suite name="Suite">
+  <test thread-count="5" name="Rest API">
+    <classes>
+      <class name="tests.Basics6_jira"/>
+      <class name="tests.Basics7_twitter"/>
+      <class name="tests.Basics4_xml"/>
+      <class name="tests.Basics1"/>
+      <class name="tests.Basics2"/>
+      <class name="tests.Basics3"/>
+      <class name="tests.Basics5_JsonPath"/>
+    </classes>
+  </test> <!-- Rest API -->
+</suite> <!-- Suite -->

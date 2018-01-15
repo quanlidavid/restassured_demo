@@ -1,3 +1,4 @@
+package tests;
 import org.testng.annotations.BeforeTest;
 import files.Resources;
 import files.ReusableMethods;
@@ -27,17 +28,14 @@ public class Basics6_jira {
 	}
 	
 	@Test
-	public void AddandDeletePlace() {
-		// Create a place (place id in response)
-		// and delete that place (Request - place id)
-		
+	public void jiraE2E() {
 		//Task 1- Login get response
 		RestAssured.baseURI = prop.getProperty("JIRAHOST");
 		Response response = given()
 								.header("Content-Type","application/json")
 								.body(Payload.loginJiraPostData())
 								.when()
-								.post(Resources.jiraLoginPostData())
+								.post(Resources.jiraLogin())
 								.then()
 								.assertThat().statusCode(200).and()
 								.contentType(ContentType.JSON).and()
@@ -54,7 +52,7 @@ public class Basics6_jira {
 						.header("Content-Type","application/json")
 						.body(Payload.createIssueJiraPostData()).log().all()
 						.when()
-						.post(Resources.jiraCreateIssuePostData())
+						.post(Resources.jiraCreateIssue())
 						.then().assertThat().statusCode(201).and()
 						.contentType(ContentType.JSON).log().all()
 						.extract().response();
@@ -67,9 +65,10 @@ public class Basics6_jira {
 				.header("cookie",session_name + "=" + session_value)
 				.header("Accept","application/json")
 				.header("Content-Type","application/json")
+				.pathParam("issueId", issueId)
 				.body(Payload.addCommentJiraPostData()).log().all()
 				.when()
-				.post(Resources.jiraAddCommentPostData(issueId))
+				.post(Resources.jiraAddCommentToIssue("{issueId}"))
 				.then().assertThat().statusCode(201).and()
 				.contentType(ContentType.JSON).log().all()
 				.extract().response();
@@ -80,9 +79,12 @@ public class Basics6_jira {
 		//Task 5 delete a comment of the issue
 		response = given()
 				.header("cookie",session_name + "=" + session_value)
-				.header("Accept","application/json").log().all()
+				.header("Accept","application/json")
+				.pathParam("issueId", issueId)
+				.pathParam("commentId", commentId)
+				.log().all()
 				.when()
-				.delete(Resources.jiraDeleteCommentDeleteData(issueId,commentId))
+				.delete(Resources.jiraDeleteCommentOfIssue("{issueId}","{commentId}"))
 				.then().assertThat().statusCode(204).and()
 				.contentType(ContentType.JSON).log().all()
 				.extract().response();

@@ -1,3 +1,4 @@
+package tests;
 import org.testng.annotations.BeforeTest;
 import files.Resources;
 import files.ReusableMethods;
@@ -37,7 +38,7 @@ public class Basics3 {
 							.queryParam("key", prop.getProperty("KEY"))
 							.body(Payload.getAddPlacePostData())
 							.when()
-							.post(Resources.placePostData())
+							.post(Resources.placeAddJson())
 							.then().assertThat().statusCode(200).and()
 							.contentType(ContentType.JSON).and().body("status", equalTo("OK"))
 							.extract().response();
@@ -53,7 +54,7 @@ public class Basics3 {
 			.queryParam("key", prop.getProperty("KEY"))
 			.body(deleteBodyStr)
 			.when()
-			.post(Resources.deletePostData())
+			.post(Resources.placeDeleteJson())
 			.then().assertThat().statusCode(200).and()
 			.contentType(ContentType.JSON).and()
 			.body("status", equalTo("OK"));
